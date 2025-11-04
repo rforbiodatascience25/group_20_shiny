@@ -17,24 +17,56 @@ server <- function(input, output) {
   })
   output$freq_plot <- renderPlot({
     freq_df <- base_freqs(dna_seq())
-    barplot(freq_df$Freq,
-            names.arg = freq_df$dna_vec,
-            col = "#b22222",
-            border = "white",
-            xlab = "Base",
-            ylab = "Frequency",
-            main = "Distribution of DNA bases")
-    abline(h = 0, col = "black", lwd = 2)
+    ggplot2::ggplot(freq_df, aes(x = dna_vec, y = Freq, fill = dna_vec)) +
+      geom_col(color = "black", alpha = 1) +
+      labs(
+        title = "Frequency of nucleotides",
+        x = "Nucleotide",
+        y = "Frequency") +
+      scale_fill_manual(
+        values = c(
+          "A" = "steelblue",
+          "T" = "darkorange",
+          "C" = "firebrick",
+          "G" = "seagreen"
+        )
+      ) +
+      geom_hline(yintercept = 0) +
+      theme_minimal(base_size = 18) +
+      theme(legend.position = "none")
   })
   output$aa_freq_plot <- renderPlot({
     aa_freq_df <- aa_freqs(translate_rna(transcribe_dna(dna_seq())))
     ggplot2::ggplot(aa_freq_df, aes(x = aa_vec, y = Freq, fill = aa_vec)) +
-      geom_col(color = "black", alpha = 0.8) +
+      geom_col(color = "black", alpha = 1) +
       labs(
         title = "Frequency of Amino acid residues",
         x = "Amino acid",
         y = "Frequency") +
-      theme_minimal() +
+      scale_fill_manual(values = c( #skudud copilot for farveskalaen
+        "A" = "goldenrod",
+        "V" = "darkorange",
+        "L" = "sienna",
+        "I" = "chocolate",
+        "M" = "tan4",
+        "F" = "firebrick",
+        "W" = "purple4",
+        "P" = "peru",
+        "G" = "grey50",
+        "S" = "steelblue",
+        "T" = "skyblue3",
+        "N" = "lightseagreen",
+        "Q" = "seagreen",
+        "C" = "darkolivegreen",
+        "K" = "royalblue",
+        "R" = "navy",
+        "H" = "slateblue",
+        "D" = "indianred",
+        "E" = "tomato",
+        "Y" = "darkgoldenrod"
+      )) +
+      geom_hline(yintercept = 0) +
+      theme_minimal(base_size = 18) +
       theme(legend.position = "none")
   })
 }
