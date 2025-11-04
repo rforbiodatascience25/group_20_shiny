@@ -63,21 +63,9 @@ ui <- page_fluid(
     col_widths = 12,
     card(
       card_header("Virtual RNA polymerase"),
-      textInput("dna", label = "DNA Sequence"),
-    )),
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Virtual RNA output"),
       mainPanel(
         verbatimTextOutput(outputId = "rna")
       )
-    )),
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Virtual Ribosome"),
-      textInput("rna", label = "RNA Sequence"),
     )),
   layout_columns(
     col_widths = 12,
@@ -90,23 +78,11 @@ ui <- page_fluid(
   layout_columns(
     col_widths = 12,
     card(
-      card_header("Enter DNA sequence"),
-      textInput("dna", label = "DNA Sequence"),
-    )),
-  layout_columns(
-    col_widths = 12,
-    card(
       card_header("Base Frequency Histogram"),
       mainPanel(
         plotOutput(outputId = "freq_plot")
       ))
     ),
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Enter AA sequence"),
-      textInput("protein", label = "Amino Acid sequence"),
-    )),
   layout_columns(
     col_widths = 12,
     card(

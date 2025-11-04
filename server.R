@@ -1,18 +1,22 @@
 # Define the Server (Backend)
 server <- function(input, output) {
-  output$dna <- renderText({
-    gene_dna(length = input$n_bases, 
+  dna_seq <- reactive({
+    gene_dna(length = input$n_bases,
              base_probs = c(input$a_prob,input$t_prob,
-                            input$c_prob,input$g_prob ))
+                            input$c_prob,input$g_prob))
+  })
+  
+  output$dna <- renderText({
+    dna_seq()
   })
   output$rna <- renderText({
-    transcribe_dna(input$dna)
+    transcribe_dna(dna_seq())
   })
   output$protein <- renderText({
-    translate_rna(input$rna)
+    translate_rna(transcribe_dna(dna_seq()))
   })
   output$freq_plot <- renderPlot({
-    freq_df <- base_freqs(input$dna)
+    freq_df <- base_freqs(dna_seq())
     barplot(freq_df$Freq,
             names.arg = freq_df$dna_vec,
             col = "#75AADB",
@@ -22,13 +26,14 @@ server <- function(input, output) {
             main = "Distribution of DNA bases")
   })
   output$aa_freq_plot <- renderPlot({
-    aa_freq_df <- aa_freqs(input$protein)
-    barplot(aa_freq_df$Freq,
-            names.arg = aa_freq_df$aa_vec,
-            col = "#75AADB",
-            border = "white",
-            xlab = "Amino acid",
-            ylab = "Frequency",
-            main = "Distribution of AA resiudes")
+    aa_freq_df <- aa_freqs(translate_rna(transcribe_dna(dna_seq())))
+    ggplot2::ggplot(aa_freq_df, aes(x = aa_vec, y = Freq, fill = aa_vec)) +
+      geom_col(color = "black", alpha = 0.8) +
+      labs(
+        title = "Frequency of Amino acid residues",
+        x = "Amino acid",
+        y = "Frequency") +
+      theme_minimal() +
+      theme(legend.position = "none")
   })
 }
