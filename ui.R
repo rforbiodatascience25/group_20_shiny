@@ -11,7 +11,7 @@ ui <- page_fluid(
     card(
       titlePanel("About"),
       helpText("Generates a DNA sequence based on desired length and 
-               base probabilities.")
+               base distributions.")
     )),
   layout_columns(
     col_widths = 12,
@@ -63,21 +63,9 @@ ui <- page_fluid(
     col_widths = 12,
     card(
       card_header("Virtual RNA polymerase"),
-      textInput("dna", label = "DNA Sequence"),
-    )),
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Virtual RNA output"),
       mainPanel(
         verbatimTextOutput(outputId = "rna")
       )
-    )),
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Virtual Ribosome"),
-      textInput("rna", label = "RNA Sequence"),
     )),
   layout_columns(
     col_widths = 12,
@@ -90,16 +78,19 @@ ui <- page_fluid(
   layout_columns(
     col_widths = 12,
     card(
-      card_header("Enter DNA sequence"),
-      textInput("dna", label = "DNA Sequence"),
-    )),
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Base Frequency Histogram"),
+      card_header("Nucleotide Frequency Histogram"),
       mainPanel(
         plotOutput(outputId = "freq_plot")
       ))
-    )
+    ),
+  layout_columns(
+    col_widths = 12,
+    card(
+      card_header("Amino acid frequency histogram"),
+      mainPanel(
+        plotOutput(outputId = "aa_freq_plot")
+      ))
+  )
+  
   
 )
