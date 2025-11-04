@@ -19,11 +19,12 @@ server <- function(input, output) {
     freq_df <- base_freqs(dna_seq())
     barplot(freq_df$Freq,
             names.arg = freq_df$dna_vec,
-            col = "#75AADB",
+            col = "#b22222",
             border = "white",
             xlab = "Base",
             ylab = "Frequency",
             main = "Distribution of DNA bases")
+    abline(h = 0, col = "black", lwd = 2)
   })
   output$aa_freq_plot <- renderPlot({
     aa_freq_df <- aa_freqs(translate_rna(transcribe_dna(dna_seq())))
