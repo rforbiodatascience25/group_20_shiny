@@ -74,3 +74,18 @@ base_freqs <- function(dna){
   base_counts <- table(dna_vec)
   return( as.data.frame.table(base_counts) )
 }
+
+aa_freqs <- function(protein){
+  aa_alphabet <- c("A","R","N","D","C","Q","E","G","H","I",
+                   "L","K","M","F","P","S","T","W","Y","V")
+  
+  if (is.null(protein) || protein == ""){
+    return(data.frame(aa = factor(aa_alphabet, levels = aa_alphabet),
+                      Freq = rep(0, length(aa_alphabet))))
+  }
+  
+  aa_vec <- strsplit(protein, split = "")[[1]]
+  aa_counts <- table(factor(aa_vec, levels = aa_alphabet))
+  
+  return(as.data.frame(aa_counts))
+}

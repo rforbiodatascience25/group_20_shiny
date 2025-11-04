@@ -21,4 +21,14 @@ server <- function(input, output) {
             ylab = "Frequency",
             main = "Distribution of DNA bases")
   })
+  output$aa_freq_plot <- renderPlot({
+    aa_freq_df <- aa_freqs(input$protein)
+    barplot(aa_freq_df$Freq,
+            names.arg = aa_freq_df$aa_vec,
+            col = "#75AADB",
+            border = "white",
+            xlab = "Amino acid",
+            ylab = "Frequency",
+            main = "Distribution of AA resiudes")
+  })
 }

@@ -100,6 +100,21 @@ ui <- page_fluid(
       mainPanel(
         plotOutput(outputId = "freq_plot")
       ))
-    )
+    ),
+  layout_columns(
+    col_widths = 12,
+    card(
+      card_header("Enter AA sequence"),
+      textInput("protein", label = "Amino Acid sequence"),
+    )),
+  layout_columns(
+    col_widths = 12,
+    card(
+      card_header("Amino acid frequency histogram"),
+      mainPanel(
+        plotOutput(outputId = "aa_freq_plot")
+      ))
+  )
+  
   
 )
