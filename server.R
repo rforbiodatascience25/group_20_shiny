@@ -1,3 +1,7 @@
+library("shiny")
+library("bslib")
+library("ggplot2")
+source(file = "app_functions.R")
 # Define the Server (Backend)
 server <- function(input, output) {
   dna_seq <- reactive({
